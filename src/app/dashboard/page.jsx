@@ -1,12 +1,16 @@
 import React from 'react'
-import Navbar from '../ui/dashboard/navbar/navbar'
-const Dashboard = () => {
+import Layout from './layout'
+
+const dashboard = () => {
   return (
+    <Layout>
     <div>
-      Dashboard
-      <Navbar/>
+        
+      <p>Dashboard</p>
+      
     </div>
+    </Layout>
   )
 }
 
-export default Dashboard
+export default dashboard
