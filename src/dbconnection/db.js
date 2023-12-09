@@ -1,0 +1,1 @@
+export const connectionStr = "mongodb+srv://skullb960:skullboymongodb@cluster0.xzgks7v.mongodb.net/dashboard?retryWrites=true&w=majority";
