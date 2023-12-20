@@ -1,3 +1,4 @@
+
 import React from 'react'
 import styles from "../../ui/dashboard/users/users.module.css"
 import Search from "../../ui/dashboard/search/search"
@@ -5,13 +6,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Pagination from "../../ui/dashboard/pagination/pagination"
 import { fetchUsers } from '@/app/lib/data'
+import { deleteUser } from '@/app/lib/actions'
 
-const Users =  async () => {
 
 
-  const users = await fetchUsers();
+const Users =  async ({searchParams}) => {
+  
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+ 
+  
 
-  return (
+  const {users, count} = await fetchUsers(q, page);
+ 
+  
+
+  return (  
     <div className={styles.container}>
    <div className={styles.top}>
     <Search placeholder={"Search for a user..."}/>
@@ -34,32 +44,40 @@ const Users =  async () => {
 </thead>
 
 <tbody>
-  <tr>
-    <td>
-      <div className={styles.user}>
-      <Image src={"/user.png"} alt='image' height={40} width={40}/>
-      John Doe
-      </div>
-    </td>
-    <td>johndoe@gmail.com</td>
-    <td>27.11.23</td>
-    <td>Admin</td>
-    <td>Active</td>
-    <td>
-      <div className={styles.buttons}>
-      <Link href={"/dashboard/users/test"}>
-      <button className={`${styles.button} ${styles.view}`}>View</button>
-      </Link>
-      <button className={`${styles.button} ${styles.delete}`}>Delete</button>
-      </div>
-    
-    </td>
-  </tr>
+  {
+    users.map((item)=> (
+      <tr key={item.email}>
+      <td>
+        <div className={styles.user}>
+        <Image src={item.img || "/user.png"} alt='image' height={40} width={40}/>
+    {item.username}
+        </div>
+      </td>
+      <td>{item.email}</td>
+      <td>{item.createdAt?.toString().slice(4, 16)}</td>
+      <td>{item.isAdmin ? "Admin" : "Client"}</td>
+      <td>{item.isActive ? "Active" : "Passive"}</td>
+      <td>
+        <div className={styles.buttons}>
+        <Link href={`/dashboard/users/${item.id}`}>
+        <button className={`${styles.button} ${styles.view}`}>View</button>
+        </Link>
+        <form action={deleteUser}>
+          <input type="hidden"  value={(item.id)} name = "id"/>
+        <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+        </form>
+        </div>
+      
+      </td>
+    </tr>
+    ))
+  }
+ 
 </tbody>
 
 
    </table>
-   <Pagination/>
+   <Pagination count={count}/>
     </div>
   )
 }

@@ -1,9 +1,14 @@
 import React from 'react'
 import styles from "../../../ui/dashboard/products/addProduct/addProduct.module.css"
+import { addProduct } from '@/app/lib/actions'
+
 const page = () => {
+
+
+
   return (
     <div className={styles.container}>
-    <form action="" className={styles.form}>
+    <form action={addProduct} className={styles.form}>
         <input type="text" placeholder='Title' name='title' required />
 <select name="cat" id="cat">
 <option value="general"> Choose a Category</option>
@@ -13,12 +18,12 @@ const page = () => {
 
 
 </select>
-<input type="number" name='price' placeholder='price' />
+<input required type="number" name='price' placeholder='price' />
 <input type="number" name='stock' placeholder='stock' />
 <input type="text" name='color' placeholder='color' />
 <input type="text" name='size' placeholder='size' />
 
-<textarea name="desc" id="desc" rows="16"></textarea>
+<textarea required name="desc" id="desc" rows="16"></textarea>
 
 <button type='submit'>Submit</button>
 

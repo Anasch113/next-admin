@@ -1,0 +1,38 @@
+.container{
+   
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+.maincontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  min-height: 600px;
+  flex-direction: column;
+  gap: 30px;
+  
+
+}
+.maincontainer h2{
+    font-size: 30px;
+    font-weight: 700;
+    
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+}
+.btn{
+    padding: 15px 30px;
+    border-radius: 8px;
+    background-color: var(--bgSoft);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.btn:hover{
+   border: 1px solid #fff;
+}
