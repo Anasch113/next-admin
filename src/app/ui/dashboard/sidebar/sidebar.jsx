@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "./slidebar.module.css"
 import MenuLink from './menuLink/menuLink';
-import { auth, signOut } from '@/app/auth';
+
 import {
   MdDashboard,
   MdSupervisedUserCircle,
@@ -16,8 +16,7 @@ import {
 } from "react-icons/md";
 import Image from 'next/image';
 const Sidebar = async () => {
-  const session = await auth();
-  console.log(session)
+  
 
   const menuItems = [
     {
@@ -84,10 +83,10 @@ const Sidebar = async () => {
   return (
     <div className={styles.container}>
       <div className={styles.user}>
-        <Image className={styles.userImage} src={session.user.img || '/user.png'} alt='user' height={50} width={50}/>
+        <Image className={styles.userImage} src={  '/user.png'} alt='user' height={50} width={50}/>
 
         <div className={styles.userDetail}>
-          <span  className={styles.username}>{session.user.username}</span>
+          <span  className={styles.username}>Anas Ch</span>
           <span  className={styles.userTitle}>Adminstrator</span>
 
         </div>
@@ -103,16 +102,13 @@ const Sidebar = async () => {
     </li>
   ))}
 </ul>
-<form action={ async ()=>{
-  "use server"
-  await signOut();
-}}>
+
 <button className={styles.logout}>
           <MdLogout />
           Logout
         </button>
 
-</form>
+
 
 
     </div>

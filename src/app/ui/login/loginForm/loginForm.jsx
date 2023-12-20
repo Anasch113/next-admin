@@ -1,28 +1,62 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./loginForm.module.css"
-import { authenticate } from '@/app/lib/actions'
-import { useState } from 'react'
+import { signIn } from 'next-auth/react';
+
+import { useRouter } from 'next/navigation';
+
+
 const LoginForm = () => {
-const [err, setErr]  = useState()
 
-    const handleLogin = async (formData)=>{
+const [username, setUserName] = useState("");
+const [password, setPassword] = useState("");
+const [error, setError] = useState("");
+const router = useRouter();
 
 
-        const data = await authenticate(formData);
-        data.error && setErr(data.error)
+const handleLogin = async (e)=>{
 
-        
-      }
+e.preventDefault();
+  
+
+  try {
+
+    const res = await signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+        })
+
+
+        if(res.error){
+          setError("Wrong Credentials")
+          return
+        }
+
+      router.replace("/dashboard");
+
+  } catch (error) {
+   console.log(error)
+  }
+
+}
+ 
   return (
 
 
-    <form action={handleLogin} className={styles.form}>
+    <form onSubmit={handleLogin} className={styles.form}>
     <h2>Login</h2>
-   <input type="text" name='username' placeholder='Username'  />
-   <input type="password" name='password' placeholder='Password' />
-   <button>Login</button>
-   {err && err}
+   <input  type="text" name='username' placeholder='Username' onChange={(e)=> setUserName(e.target.value)} />
+   <input  type="password" name='password' placeholder='Password' onChange={(e)=> setPassword(e.target.value)} />
+  
+   <button type='submit'>Login</button>
+   {
+    error && (
+      <p>{error}</p>
+
+    )
+   }
+   
    </form>
   )
 }

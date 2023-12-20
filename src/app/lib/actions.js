@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from 'bcrypt'
 import { Product } from "./models";
-import { signIn } from "../auth";
 
 
 
@@ -176,15 +175,15 @@ const {id} = Object.fromEntries(formDataHello);
 
                     // Action (api) for login
 
-                    export const authenticate = async ( formDataHello) => {
-                        const { username, password } = Object.fromEntries(formDataHello);
+                    // export const authenticate = async ( formDataHello) => {
+                    //     const { username, password } = Object.fromEntries(formDataHello);
                       
-                        try {
-                          await signIn("credentials", { username, password });
+                    //     try {
+                    //       await signIn("credentials", { username, password });
                           
                           
-                        } catch (error) {
-                        return {error: "Wrong Credentials "}
-                        }
+                    //     } catch (error) {
+                    //     return {error: "Wrong Credentials "}
+                    //     }
                       
-                      };
+                    //   };
