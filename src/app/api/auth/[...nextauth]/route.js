@@ -1,5 +1,9 @@
+import { User } from "@/app/lib/models";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+import { connectionStr } from "@/dbconnection/db";
 
 
 export const authOptions = {
@@ -11,8 +15,35 @@ CredentialsProvider({
     credentials: {},
 
     async authorize(credentials){
-const user = {id: "1"}
-return user
+const {username, password} = credentials;
+
+try {
+    await mongoose.connect(connectionStr);
+    const user = await User.findOne({username});
+    if(!user){
+        return null
+    }
+
+    const passwordMatch = await bycrypt.compare(password, user.password)
+
+    if(!passwordMatch){
+        return null
+    }
+
+
+
+
+    return user;
+
+    
+} catch (error) {
+    console.log("Error while login", error)
+}
+
+
+
+
+
     }
 })
 
